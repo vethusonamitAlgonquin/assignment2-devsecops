@@ -15,8 +15,8 @@ handler.setFormatter(formatter)
 app.logger.addHandler(handler)
 app.logger = logging.LoggerAdapter(app.logger,logapp)
 # Google sso id
-google_client_id = '<add-id>'
-google_client_secret = '<add-secret>'
+google_client_id ='CLIENT_ID'
+google_client_secret = 'CLIENT_SECRET'
 google_redirect_uri = 'http://localhost:8000/login/authorized'
 
 oauth = OAuth(app)
