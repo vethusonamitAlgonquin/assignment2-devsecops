@@ -9,14 +9,14 @@ app.secret_key = '"testingtesting'
 
 # logging
 app.logger.setLevel(logging.INFO)
-handler = logging.handlers.SysLogHandler(address = ('192.168.75.133', 514)) #add vm ip here
+handler = logging.handlers.SysLogHandler(address = ('192.168.75.134', 514)) #add vm ip here
 formatter = logging.Formatter('%(asctime)s %(app_name)s : %(message)s')
 handler.setFormatter(formatter)
 app.logger.addHandler(handler)
 app.logger = logging.LoggerAdapter(app.logger,logapp)
 # Google sso id
-google_client_id ='CLIENT_ID'
-google_client_secret = 'CLIENT_SECRET'
+google_client_id ='<client id>'
+google_client_secret = 'client secret'
 google_redirect_uri = 'http://localhost:8000/login/authorized'
 
 oauth = OAuth(app)
@@ -48,6 +48,7 @@ def index():
 @app.route('/login')
 def login():
     app.logger.info('User is trying to log in with Google account')
+    app.logger.info('Login Attempt')
     return google.authorize(callback=url_for('authorized', _external=True))
 
 @app.route('/login/authorized')
@@ -55,6 +56,7 @@ def authorized():
     response = google.authorized_response()
     if response is None or response.get('access_token') is None:
         app.logger.info('User denied the request to sign in.')
+        app.logger.info('Login Failed')
         return 'Login failed.'
 
     session['google_token'] = (response['access_token'], '')
@@ -62,12 +64,14 @@ def authorized():
     # Here, 'me.data' contains user information.
     # You can perform registration process using this information if needed.
     app.logger.info(f'{me.data["email"]} is logged in')
+    app.logger.info('Login Successful')
     return redirect(url_for('index'))
 
 @app.route('/logout')
 def logout():
     session.pop('google_token', None)
     app.logger.info('User is logged out')
+    app.logger.info('Logout Successful')
     return redirect(url_for('index'))
 
 #@oauth.tokengetter

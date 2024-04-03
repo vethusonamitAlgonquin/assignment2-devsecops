@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: flask-sso-app
-          image: docker.io/vethusonamit/assignment1devsecops
+          image: docker.io/vethusonamit/assignment2devsecops
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
