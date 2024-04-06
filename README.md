@@ -1,5 +1,7 @@
 # **Assignment 2: Automating Anomaly Detection and Alerting in Cloud Security**
 
+Github Link : https://github.com/vethusonamitAlgonquin/assignment2-devsecops/tree/main
+
 Group Members:
 
 Brent Encarnado - 040902865
